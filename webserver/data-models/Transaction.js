@@ -4,9 +4,7 @@ const TransactionSchema = new Schema({
   id: { type: SchemaTypes.ObjectId },
   user_id: { type: String, default: null },
   amount: { type: Number, default: null },
-  credit: { type: Boolean, default: null },
-  debit: { type: Boolean, default: null },
-  description: { type: String, default: null },
+  debitCredit: { type: String, default: null },
   merchant_id: { type: String, default: null }
 })
 

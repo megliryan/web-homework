@@ -33,3 +33,4 @@ See the [Backend instructions](backend.md) for backend focused instructions.
 
 
 
+***Install v.14 of nvm before starting***

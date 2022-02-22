@@ -6,5 +6,11 @@
   "repository": "https://github.com/DivvyPayHQ/web-homework",
   "author": "Lance Wintch <lance.wintch@divvypay.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "bootstrap": "^5.1.3",
+    "mongodb": "^4.3.1",
+    "react-delete-row": "^1.0.0"
+  }
 }

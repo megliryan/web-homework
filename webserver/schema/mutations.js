@@ -12,13 +12,12 @@ const mutation = new GraphQLObjectType({
         user_id: { type: GraphQLString },
         description: { type: GraphQLString },
         merchant_id: { type: GraphQLString },
-        debit: { type: GraphQLBoolean },
-        credit: { type: GraphQLBoolean },
+        debitCredit: { type: GraphQLString },
         amount: { type: GraphQLFloat }
       },
       /* eslint-disable-next-line camelcase */
-      resolve (parentValue, { user_id, description, merchant_id, debit, credit, amount }) {
-        return (new TransactionModel({ user_id, description, merchant_id, debit, credit, amount })).save()
+      resolve (parentValue, { user_id, description, merchant_id, debitCredit, amount }) {
+        return (new TransactionModel({ user_id, description, merchant_id, debitCredit, amount })).save()
       }
     }
   }

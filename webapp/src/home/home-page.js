@@ -15,6 +15,7 @@ export function Home () {
   }
 
   if (error) {
+    console.log(error);
     return (
       <Fragment>
         ¯\_(ツ)_/¯

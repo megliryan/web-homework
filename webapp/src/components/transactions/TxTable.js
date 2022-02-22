@@ -1,58 +1,69 @@
-import React from 'react'
-import { arrayOf, string, bool, number, shape } from 'prop-types'
+import React, { useState } from 'react'
 import { css } from '@emotion/core'
+import TableRows from "./TableRows"
 
 const styles = css`
  .header {
    font-weight: bold;
  }
+
+ .table {
+   padding: 32px;
+   background-color: grey;
+   font-size: 24px;
+   border-radius: 4px;
+ }
 `
 
-const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
+function TxTable(){
+  const [rowsData, setRowsData] = useState([]);
 
-export function TxTable ({ data }) {
+  const addTransaction = ()=>{
+    const rowsInputs={
+      userId:'',
+      description:'',
+      merchantId:'',
+      debitCredit:'',
+      amount:''
+    }
+    setRowsData([...rowsData, rowsInputs])
+  }
+
+  const deleteTransaction = (i)=>{
+    const rows = [...rowsData];
+    rows.splice(i,1);
+    setRowsData(rows);
+  }
+
+  const handleChange = (i, event)=>{
+    const { name, value } = event.target;
+    const rowsInput = [...rowsData];
+    rowsInput[i][name] = value;
+    setRowsData(rowsInput);
+  }
+
   return (
-    <table css={styles}>
-      <tbody>
-        <tr className='header'>
-          <td >ID</td>
-          <td >User ID</td>
-          <td >Description</td>
-          <td >Merchant ID</td>
-          <td >Debit</td>
-          <td >Credit</td>
-          <td >Amount</td>
-        </tr>
-        {
-          data.map(tx => {
-            const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
-            return (
-              <tr data-testid={`transaction-${id}`} key={`transaction-${id}`}>
-                <td data-testid={makeDataTestId(id, 'id')}>{id}</td>
-                <td data-testid={makeDataTestId(id, 'userId')}>{userId}</td>
-                <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
-                <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
-                <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
-                <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
-                <td data-testid={makeDataTestId(id, 'amount')}>{amount}</td>
+    <div>
+      <div>
+        <div>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Description</th>
+                <th>Merchant ID</th>
+                <th>Debit / Credit</th>
+                <th>Amount</th>
+                <th><button className='btn' onClick={addTransaction}>Add Transaction</button></th>
               </tr>
-            )
-          })
-        }
-      </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+              <TableRows rowsData={rowsData} deleteTransaction={deleteTransaction} handleChange={handleChange} />
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   )
 }
-
-TxTable.propTypes = {
-  data: arrayOf(shape({
-    id: string,
-    user_id: string,
-    description: string,
-    merchant_id: string,
-    debit: bool,
-    credit: bool,
-    amount: number
-  }))
-}
+export default TxTable;
